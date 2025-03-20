@@ -1,0 +1,68 @@
+{
+  "name": "opensystemshell",
+  "displayName": "Open In System Shell",
+  "description": "Quick open system terminal",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "opensystemshell.openFolderInTerminal",
+        "title": "Open in System Shell",
+        "icon": "$(terminal)"
+      },
+      {
+        "command": "opensystemshell.openCurrentInTerminal",
+        "title": "Open Current Location in System Shell"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "explorerResourceIsFolder",
+          "command": "opensystemshell.openFolderInTerminal",
+          "group": "navigation"
+        },
+        {
+          "when": "!explorerResourceIsFolder",
+          "command": "opensystemshell.openFolderInTerminal",
+          "group": "navigation"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "opensystemshell.openCurrentInTerminal",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r",
+        "when": "editorTextFocus || filesExplorerFocus || !editorFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "test": "node ./test/runTest.js",
+    "vscode:prepublish": "echo 'Preparing to package extension'"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "eslint": "^8.45.0",
+    "vscode-test": "^1.6.1",
+    "yo": "^4.3.1",
+    "generator-code": "^1.8.3"
+  },
+  "publisher": "ada87",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ada87/opensystemshell.git"
+  },
+  "icon": "icon.png"
+}
