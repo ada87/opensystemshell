@@ -1,8 +1,8 @@
 {
   "name": "opensystemshell",
   "displayName": "Open In System Shell",
-  "description": "Quick open system terminal",
-  "version": "0.1.1",
+  "description": "Quick open in system terminal",
+  "version": "0.1.2",
   "publisher": "xiangda",
   "license": "MIT",
   "repository": {

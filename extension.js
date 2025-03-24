@@ -16,7 +16,7 @@ function openTerminalAtPath(folderPath) {
 
     // Get stats to determine if it's a file or directory
     const stats = fs.statSync(folderPath);
-    
+
     // If it's a file, get the directory
     if (stats.isFile()) {
         folderPath = path.dirname(folderPath);
@@ -38,18 +38,46 @@ function openTerminalAtPath(folderPath) {
                 }
             });
         } else if (process.platform === 'darwin') {
-            // For macOS
-            const command = `open -a Terminal "${folderPath}"`;
-            exec(command, (error) => {
-                if (error) {
-                    vscode.window.showErrorMessage(`Failed to open terminal: ${error.message}`);
+            // For macOS - first check for iTerm2
+            const checkiTerm2 = 'osascript -e \'tell application "iTerm" to version\'';
+            exec(checkiTerm2, (error) => {
+                if (!error) {
+                    // iTerm2 is installed, use it
+                    const appleScript = `
+    tell application "iTerm"
+      activate
+      create window with default profile
+      tell current session of current window
+        write text "cd ${folderPath}"
+      end tell
+    end tell
+  `;
+                    exec(`osascript -e '${appleScript}'`, (error) => {
+                        if (error) {
+                            // vscode.window.showErrorMessage(`Failed to open iTerm2: ${error.message}`);
+                            const command = `open -a Terminal "${folderPath}"`;
+                            exec(command, (error) => {
+                                if (error) {
+                                    vscode.window.showErrorMessage(`Failed to open Terminal: ${error.message}`);
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    // iTerm2 not found, fall back to Terminal
+                    const command = `open -a Terminal "${folderPath}"`;
+                    exec(command, (error) => {
+                        if (error) {
+                            vscode.window.showErrorMessage(`Failed to open Terminal: ${error.message}`);
+                        }
+                    });
                 }
             });
         } else {
             // For Linux - try to detect the terminal
             const terminals = ['x-terminal-emulator', 'gnome-terminal', 'konsole', 'xterm'];
             let found = false;
-            
+
             for (const terminal of terminals) {
                 const command = `${terminal} --working-directory="${folderPath}"`;
                 try {
@@ -63,7 +91,7 @@ function openTerminalAtPath(folderPath) {
                     // Continue to the next terminal
                 }
             }
-            
+
             if (!found) {
                 vscode.window.showErrorMessage('Could not detect a suitable terminal emulator');
             }
@@ -117,7 +145,7 @@ function activate(context) {
         if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0) {
             const rootPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
             openTerminalAtPath(rootPath);
-        } 
+        }
         else {
             vscode.window.showErrorMessage('No folder is open in the workspace');
         }
@@ -127,7 +155,7 @@ function activate(context) {
     context.subscriptions.push(openCurrentCmd);
 }
 
-function deactivate() {}
+function deactivate() { }
 
 module.exports = {
     activate,
