@@ -3,14 +3,18 @@
   "displayName": "Open In System Shell",
   "description": "Quick open system terminal",
   "version": "0.1.1",
+  "publisher": "xiangda",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ada87/opensystemshell.git"
+  },
+  "icon": "icon.png",
+  "main": "./extension.js",
   "engines": {
     "vscode": "^1.74.0"
   },
-  "categories": [
-    "Other"
-  ],
   "activationEvents": [],
-  "main": "./extension.js",
   "contributes": {
     "commands": [
       {
@@ -46,24 +50,5 @@
         "when": "editorTextFocus || filesExplorerFocus || !editorFocus"
       }
     ]
-  },
-  "scripts": {
-    "lint": "eslint .",
-    "test": "node ./test/runTest.js",
-    "vscode:prepublish": "echo 'Preparing to package extension'"
-  },
-  "devDependencies": {
-    "@types/vscode": "^1.74.0",
-    "eslint": "^8.45.0",
-    "vscode-test": "^1.6.1",
-    "yo": "^4.3.1",
-    "generator-code": "^1.8.3"
-  },
-  "publisher": "xiangda",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ada87/opensystemshell.git"
-  },
-  "icon": "icon.png"
+  }
 }
