@@ -2,7 +2,7 @@
   "name": "opensystemshell",
   "displayName": "Open In System Shell",
   "description": "Quick open system terminal",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -17,29 +17,30 @@
         "command": "opensystemshell.openFolderInTerminal",
         "title": "Open in System Shell",
         "icon": "$(terminal)"
-      },
-      {
-        "command": "opensystemshell.openCurrentInTerminal",
-        "title": "Open Current Location in System Shell"
       }
     ],
+    "configuration": {
+      "title": "Open In System Shell",
+      "properties": {
+        "opensystemshell.showInContextMenu": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show 'Open in System Shell' in the explorer context menu"
+        }
+      }
+    },
     "menus": {
       "explorer/context": [
         {
-          "when": "explorerResourceIsFolder",
+          "when": "config.opensystemshell.showInContextMenu",
           "command": "opensystemshell.openFolderInTerminal",
-          "group": "navigation"
-        },
-        {
-          "when": "!explorerResourceIsFolder",
-          "command": "opensystemshell.openFolderInTerminal",
-          "group": "navigation"
+          "group": "1_modification@99"
         }
       ]
     },
     "keybindings": [
       {
-        "command": "opensystemshell.openCurrentInTerminal",
+        "command": "opensystemshell.openFolderInTerminal",
         "key": "ctrl+shift+r",
         "mac": "cmd+shift+r",
         "when": "editorTextFocus || filesExplorerFocus || !editorFocus"

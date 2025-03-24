@@ -113,21 +113,8 @@ function activate(context) {
 
     // Command to open current location (keyboard shortcut)
     let openCurrentCmd = vscode.commands.registerCommand('opensystemshell.openCurrentInTerminal', async () => {
-        // First check if there's a selection in the explorer view
-        const explorerSelection = await getExplorerSelection();
-        
-        if (explorerSelection) {
-            // If there's a selection in the explorer, use that
-            openTerminalAtPath(explorerSelection.fsPath);
-        } 
-        // Check if there's an active editor
-        else if (vscode.window.activeTextEditor) {
-            // Get the path of the active document
-            const filePath = vscode.window.activeTextEditor.document.uri.fsPath;
-            openTerminalAtPath(filePath);
-        } 
-        // Otherwise use workspace root folder
-        else if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0) {
+        // For keyboard shortcut, directly open workspace root folder
+        if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0) {
             const rootPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
             openTerminalAtPath(rootPath);
         } 
