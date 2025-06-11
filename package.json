@@ -1,0 +1,53 @@
+{
+  "name": "opensystemshell",
+  "displayName": "Open In System Shell",
+  "description": "Quick open in system terminal",
+  "version": "0.1.3",
+  "publisher": "xiangda",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ada87/opensystemshell.git"
+  },
+  "icon": "icon.png",
+  "main": "./extension.js",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "opensystemshell.openFolderInTerminal",
+        "title": "Open in System Shell",
+        "icon": "$(terminal)"
+      }
+    ],
+    "configuration": {
+      "title": "Open In System Shell",
+      "properties": {
+        "opensystemshell.showInContextMenu": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show 'Open in System Shell' in the explorer context menu"
+        }
+      }
+    },
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "config.opensystemshell.showInContextMenu",
+          "command": "opensystemshell.openFolderInTerminal",
+          "group": "1_modification@99"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "opensystemshell.openFolderInTerminal",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r",
+        "when": "editorTextFocus || filesExplorerFocus || !editorFocus"
+      }
+    ]
+  }
+}
