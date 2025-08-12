@@ -1,3 +1,12 @@
 .gitignore
-node_modules/**
+.kiro/**
+.cursor/**
 .vscode/**
+node_modules/**
+*.psd
+tsconfig.json
+*.vsix
+.git/** */
+*.gif
+*.yaml
+*.ts

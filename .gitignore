@@ -1,2 +1,7 @@
+.vscode
+.kiro
+.cursor
 node_modules
 *.vsix
+*.js
+pnpm-lock.yaml
