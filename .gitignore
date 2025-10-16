@@ -1,6 +1,5 @@
 .vscode
-.kiro
-.cursor
+.claude
 node_modules
 *.vsix
 *.js

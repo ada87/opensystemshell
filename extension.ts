@@ -24,9 +24,9 @@ const openTerminal = async (uri: Uri): Promise<void> => {
     switch (process.platform) {
         case 'win32':
             if (useDefault) {
-                openInWindows(folderPath);
+                await openInWindows(folderPath);
             } else {
-                openInPowershell(folderPath);
+                await openInPowershell(folderPath);
             }
             break;
         case 'darwin':
