@@ -1,4 +1,3 @@
-import { workspace } from 'vscode';
 import { exec } from 'child_process';
 
 
@@ -51,10 +50,7 @@ export const openInPowershell = async (folderPath: string): Promise<void> => {
     }
 };
 
-export const openInWindows = async (folderPath: string): Promise<void> => {
-    const terminalIntegrated = workspace.getConfiguration('terminal.integrated');
-    const defaultProfile = terminalIntegrated.get<string>('defaultProfile.windows');
-
+export const openInWindows = async (folderPath: string, defaultProfile?: string): Promise<void> => {
     if (defaultProfile != null) {
         const profileLower = defaultProfile.toLowerCase();
         if (profileLower.startsWith('command') || profileLower.includes('cmd')) {

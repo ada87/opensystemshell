@@ -1,4 +1,3 @@
-import { workspace } from 'vscode';
 import { exec } from 'child_process';
 
 var iTermIsInstalled: boolean | null = null;
@@ -43,10 +42,7 @@ end tell
     }
 };
 
-export const openInMac = (folderPath: string): void => {
-    const terminalIntegrated = workspace.getConfiguration('terminal.integrated');
-    const defaultProfile = terminalIntegrated.get<string>('defaultProfile.osx');
-
+export const openInMac = (folderPath: string, defaultProfile?: string): void => {
     if (defaultProfile == null) {
         openInITerm(folderPath);
         return;

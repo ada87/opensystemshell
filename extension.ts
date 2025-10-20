@@ -20,26 +20,25 @@ const openTerminal = async (uri: Uri): Promise<void> => {
 
     const extensionConfig = workspace.getConfiguration('opensystemshell');
     const useDefault = extensionConfig.get<boolean>('useDefault', true);
-
+    const terminalIntegrated = workspace.getConfiguration('terminal.integrated');
     switch (process.platform) {
         case 'win32':
             if (useDefault) {
-                await openInWindows(folderPath);
+                await openInWindows(folderPath, terminalIntegrated.get<string>('defaultProfile.windows'));
             } else {
                 await openInPowershell(folderPath);
             }
             break;
         case 'darwin':
             if (useDefault) {
-                openInMac(folderPath);
+                openInMac(folderPath, terminalIntegrated.get<string>('defaultProfile.osx'));
             } else {
                 openInITerm(folderPath);
             }
             break;
-        // case 'linux':
-        default:
+        case 'linux':
             if (useDefault) {
-                openInLinux(folderPath);
+                openInLinux(folderPath, terminalIntegrated.get<string>('defaultProfile.linux'));
             } else {
                 openInBash(folderPath);
             }
@@ -55,6 +54,7 @@ const openWorkspaceFolder = (): void => {
     }
     openTerminal(workspace.workspaceFolders[0].uri);
 };
+
 const folderCommandHandler = (uri?: Uri): void => {
     if (uri) {
         openTerminal(uri);
