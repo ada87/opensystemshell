@@ -2,7 +2,7 @@
   "name": "opensystemshell",
   "displayName": "Open In System Shell",
   "description": "Open system terminal and enter current directory",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "publisher": "xiangda",
   "license": "MIT",
   "repository": {

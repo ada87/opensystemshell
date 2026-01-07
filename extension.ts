@@ -1,4 +1,4 @@
-import { workspace, commands, FileType } from 'vscode';
+import { workspace, commands, FileType, window } from 'vscode';
 import { dirname } from 'path';
 import { openInWindows, openInPowershell } from './openInWindows'
 import { openInMac, openInITerm } from './openInMac'
@@ -52,6 +52,18 @@ const openWorkspaceFolder = (): void => {
     if (workspace.workspaceFolders == null || workspace.workspaceFolders.length === 0) {
         return;
     }
+
+    // 尝试从当前活动编辑器获取文件所属的工作区文件夹
+    const activeEditor = window.activeTextEditor;
+    if (activeEditor) {
+        const workspaceFolder = workspace.getWorkspaceFolder(activeEditor.document.uri);
+        if (workspaceFolder) {
+            openTerminal(workspaceFolder.uri);
+            return;
+        }
+    }
+
+    // 回退到第一个工作区文件夹
     openTerminal(workspace.workspaceFolders[0].uri);
 };
 
